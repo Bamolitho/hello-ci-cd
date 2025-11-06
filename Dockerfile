@@ -1,5 +1,5 @@
 # Étape 1 : Image de base
-FROM python:3.10-slim
+FROM python:3.12-slim
 
 # Étape 2 : Dossier de travail
 WORKDIR /app

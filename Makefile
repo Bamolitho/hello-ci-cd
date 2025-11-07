@@ -23,7 +23,7 @@ run:
 # Pousser sur github
 github:
 	git add .
-	git commit -m "Initial commit: Flask hello microservice"
+	git commit -m "Tutos complet CI/CD ici 👉 https://github.com/Bamolitho/InsideCI-CD"
 	git push
 
 # Pousser avec message personnalisé

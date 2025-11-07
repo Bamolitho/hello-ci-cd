@@ -7,7 +7,7 @@ on:
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
-
+    
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -38,11 +38,11 @@ jobs:
           VERSION=${{ steps.get_version.outputs.last_tag }}
           VERSION=${VERSION#v}
           IFS='.' read -r MAJOR MINOR PATCH <<< "$VERSION"
-
+          
           # Détection du type de commit
           COMMIT_MSG=$(git log -1 --pretty=%B)
           echo "Dernier commit: $COMMIT_MSG"
-
+          
           if [[ $COMMIT_MSG == *"BREAKING CHANGE"* || $COMMIT_MSG == *"!"* ]]; then
             MAJOR=$((MAJOR+1))
             MINOR=0
@@ -59,7 +59,7 @@ jobs:
             PATCH=$((PATCH+1))
             LEVEL="PATCH (default)"
           fi
-
+          
           NEW_VERSION="v$MAJOR.$MINOR.$PATCH"
           echo "Type de changement : $LEVEL"
           echo "Nouvelle version : $NEW_VERSION"
@@ -78,7 +78,7 @@ jobs:
         with:
           context: .
           push: true
-          tags: >
+          tags: |
             ${{ secrets.DOCKERHUB_USERNAME }}/hello-ci-cd:latest
             ${{ secrets.DOCKERHUB_USERNAME }}/hello-ci-cd:${{ env.VERSION }}
 

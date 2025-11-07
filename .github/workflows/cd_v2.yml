@@ -83,4 +83,4 @@ jobs:
             ${{ secrets.DOCKERHUB_USERNAME }}/hello-ci-cd:${{ env.VERSION }}
 
       - name: Display final version
-        run: echo "Version publiée : ${{ env.VERSION }}"
+        run: echo "[OK] Version publiée : ${{ env.VERSION }}"

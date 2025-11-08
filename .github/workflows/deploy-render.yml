@@ -1,0 +1,39 @@
+name: CD - Deploy to Render
+
+on:
+  workflow_run:
+    workflows: ["CD - Build, Tag & Push Docker Image"]
+    types:
+      - completed
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy to Render
+        run: |
+          curl -X POST "${{ secrets.RENDER_DEPLOY_HOOK }}" \
+          -H "Accept: application/json" \
+          -H "Content-Type: application/json"
+          echo "🚀 Déploiement Render déclenché avec succès !"
+
+      - name: Send Telegram Notification
+        if: success()
+        run: |
+          MESSAGE="✅ Déploiement réussi sur Render pour ${{ github.repository }} (tag: latest)"
+          curl -s -X POST https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage \
+          -d chat_id=${{ secrets.TELEGRAM_CHAT_ID }} \
+          -d text="$MESSAGE"
+
+      - name: Send Telegram Notification (failure)
+        if: failure()
+        run: |
+          MESSAGE="❌ Échec du déploiement sur Render pour ${{ github.repository }} !"
+          curl -s -X POST https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage \
+          -d chat_id=${{ secrets.TELEGRAM_CHAT_ID }} \
+          -d text="$MESSAGE"

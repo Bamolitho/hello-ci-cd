@@ -11,3 +11,4 @@ API Flask minimaliste pour pratiquer CI/CD
 
 [![CD](https://github.com/Bamolitho/hello-ci-cd/actions/workflows/cd.yml/badge.svg)](https://github.com/Bamolitho/hello-ci-cd/actions/workflows/cd.yml)
 
+[![deploy-render](https://github.com/Bamolitho/hello-ci-cd/actions/workflows/deploy-render.yml/badge.svg)](https://github.com/Bamolitho/hello-ci-cd/actions/workflows/deploy-render.yml)
